@@ -1,0 +1,6 @@
+extends layout
+
+block content
+    ul
+        each title, i in titles
+            a(href="./"+title) #{title}

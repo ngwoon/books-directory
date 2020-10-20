@@ -1,7 +1,15 @@
 extends layout
 
+block css
+  link(rel='stylesheet', href='/stylesheets/index.css')
+
 block sidebar
   
 block content
   h1= title
-  p Welcome to #{title}
+  p.greeting Welcome. Choose the menu.
+
+  ul
+  each menu, i in menuList
+    li
+      a(href="./" + href[i]) #{menu}
