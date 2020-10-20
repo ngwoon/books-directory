@@ -40,6 +40,12 @@ li {
     margin-top: 5px;
 }
 
+textarea {
+    resize: none;
+    width: 800px;
+    height: 500px;
+}
+
 .menu {
     margin: 20px;
 }
