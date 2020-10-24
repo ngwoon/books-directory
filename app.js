@@ -8,6 +8,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var docRouter = require('./routes/document');
 
+// var bodyParser = require('body-parser');
+
 var app = express();
 
 // view engine setup
@@ -39,5 +41,14 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// setting body-parser
+// app.use( bodyParser.json() );       // to support JSON-encoded bodies
+// app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+//   extended: true
+// })); 
+
+app.use(express.urlencoded());
+app.use(express.json());      // if needed
 
 module.exports = app;
