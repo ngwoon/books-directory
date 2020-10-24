@@ -2,14 +2,18 @@ extends layout
 
 block css
   link(rel='stylesheet', href='/stylesheets/index.css')
+  link(rel='stylesheet', href='/stylesheets/search_bar.css')
+  link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+
 
 block sidebar
   
 block content
-  h1= title
-  p.greeting Welcome. Choose the menu.
-
-  ul
-  each menu, i in menuList
-    li
-      a(href="./" + href[i]) #{menu}
+  .wrap
+    h1.title= title
+    .greeting Welcome. Please search for a book.
+    form(action="./document/search", method="post")
+      .search
+        input.searchTerm(type="text", name="searchTerm", placeholder="What are you looking for?")
+        button.searchButton(type="submit")
+          i.fa.fa-search
