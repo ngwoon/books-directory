@@ -28,7 +28,7 @@ app.use('/document', docRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.render("404");
 });
 
 // error handler
@@ -42,13 +42,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// setting body-parser
-// app.use( bodyParser.json() );       // to support JSON-encoded bodies
-// app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-//   extended: true
-// })); 
-
-app.use(express.urlencoded());
-app.use(express.json());      // if needed
 
 module.exports = app;
