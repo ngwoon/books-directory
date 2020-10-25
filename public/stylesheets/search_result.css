@@ -1,10 +1,48 @@
+body {
+    background-color: #f2f2f2;;
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
 a {
     text-decoration: none;
     position: relative;
     color: black;
 }
 
-a:before {
+.wrap {
+    width: 20%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+}
+
+.card {
+    transition: box-shadow .3s;
+    width: 95%;
+    border-radius:10px;
+    border: 1px solid #ccc;
+    padding: 5px 5px 5px 10px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    float: left;
+}
+
+.card:hover {
+    box-shadow: 0 0 15px rgba(33,33,33,.2); 
+}
+
+.go-to-back {
+    font-size: 10px;
+    float: right;
+    /* margin-top: 20px; */
+}
+
+.go-to-back a:before {
     content: "";
     position: absolute;
     width: 100%;
@@ -17,25 +55,7 @@ a:before {
     transition: all 0.3s ease-in-out;
 }
 
-a:hover:before {
+.go-to-back a:hover:before {
     visibility: visible;
     transform: scaleX(1);
-}
-
-.wrap {
-    width: 20%;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -80%);
-}
-
-.card {
-    background-color: white;
-    border-radius: 10%;
-    margin-bottom: 10px;
-    font-size: 25px;
-    width: 100%;
-    position: relative;
-    display: flex;
 }

@@ -19,14 +19,22 @@ function init() {
 
 
     router.get('/search', function(req, res, next) {
+        let fileName = req.query['file'];
+        fileName += ".txt";
         
+        const path = "/../public/files/" + fileName;
+        fs.readFile(__dirname + path, function(error, file) {
+            if(error) {
+                res.status(err.status || 500);
+                res.render('error');
+                console.error(error);
+            } else
+                res.render("show_file", {file,});
+        });
     });
 
     router.post('/search', function(req, res, next) {
         const searchTerm = req.body.searchTerm.split(" ");
-        
-        console.log("searchTerm");
-        console.log(searchTerm);
 
         const coincideFiles = [];
         fileList.forEach(file => {

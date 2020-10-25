@@ -6,8 +6,4 @@ block css
 block content
     h1 #{title}
     br
-
-    if #{reqType} == "read":
-        textarea(readonly) #{content}
-    else
-        textarea #{content}
+    textarea(readonly) #{file}
