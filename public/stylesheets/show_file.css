@@ -14,7 +14,7 @@ body {
     margin-bottom: 10px;
 }
 
-.content textarea{
+textarea{
     resize: none;
     width: 750px;
     height: 500px;
