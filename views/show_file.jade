@@ -1,9 +1,11 @@
 extends layout
 
 block css
-    link(rel='stylesheet', href='/stylesheets/index.css')
+    link(rel='stylesheet', href='/stylesheets/show_file.css')
 
 block content
-    h1 #{title}
-    br
-    textarea(readonly) #{file}
+    .wrap
+        h1.title #{title}
+        br
+        .content
+            textarea(readonly) #{content}

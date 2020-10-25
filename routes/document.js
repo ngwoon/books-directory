@@ -19,17 +19,15 @@ function init() {
 
 
     router.get('/search', function(req, res, next) {
-        let fileName = req.query['file'];
-        fileName += ".txt";
+        const title = req.query['file'];
+        const fileName = title + ".txt";
         
         const path = "/../public/files/" + fileName;
-        fs.readFile(__dirname + path, function(error, file) {
+        fs.readFile(__dirname + path, function(error, content) {
             if(error) {
-                res.status(err.status || 500);
-                res.render('error');
-                console.error(error);
+                res.render("404");
             } else
-                res.render("show_file", {file,});
+                res.render("show_file", {title, content,});
         });
     });
 
