@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mysql = require("mysql2");
+const os = require("os");
+const secret = require("./secrets.json");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -42,5 +45,24 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+/*
+    mysql connection
+*/
+const connection_param = {
+    host     : secret.DEVELOP_HOST,
+    user     : secret.DEVELOP_ID,
+    password : secret.DEVELOP_PW,
+    database : secret.DB,
+};
+if(os.hostname() !== secret.HOSTNAME) {
+    connection_param.host = secret.DEPLOY_HOST;
+    connection_param.user = secret.DEPLOY_ID;
+    connection_param.password = secret.DEPLOY_PW;
+}
+
+console.log(connection_param);
+const connection = mysql.createConnection(connection_param);
+connection.connect();
 
 module.exports = app;
