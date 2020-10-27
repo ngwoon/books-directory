@@ -14,3 +14,11 @@ block content
         input.searchTerm(type="text", name="searchTerm", placeholder="What are you looking for?")
         button.searchButton(type="submit")
           i.fa.fa-search
+
+    .user-check
+        if !authenticated
+            a(href="/users/login") 로그인 하시려면 이쪽으로..
+        else
+            | #{authenticated} 님. 환영합니다.
+            br
+            a(href="/users/logout") 로그아웃

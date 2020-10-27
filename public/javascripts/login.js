@@ -1,14 +1,17 @@
-
 (function ($) {
     "use strict";
 
     /*==================================================================
     [ Validate ]*/
-    var input = $('.validate-input .input100');
+    const input = $('.validate-input .input100');
 
-    $('.validate-form').on('submit',function(){
-        var check = true;
+    console.log($);
 
+    $('.validate-form').submit(function(event) {
+
+        event.preventDefault();
+
+        let check = true;
         for(var i=0; i<input.length; i++) {
             if(validate(input[i]) == false){
                 showValidate(input[i]);
@@ -16,8 +19,37 @@
             }
         }
 
-        return check;
+        if(check) {
+            const username = $('input[name="username"]').val();
+            const password = $('input[name="pass"]').val();
+
+            $.ajax({
+                url: "/users/login",
+                async: true,
+                dataType: "json",
+                type: "POST",
+                data: {
+                    username: username,
+                    pass: password,
+                },
+                success: (data) => {
+                    console.log(data);
+                    if(data.state === "fail") {
+                        $('.fail').addClass(".alert-fail");
+                    }
+                    else {
+                        location.href = data.href;
+                    }
+                },
+                error: (req, state, error) => {
+                    alert(error);
+                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                },
+            });
+        }
     });
+
+    console.log($);
 
 
     $('.validate-form .input100').each(function(){
