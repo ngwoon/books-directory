@@ -1,4 +1,3 @@
-
 (function ($) {
     "use strict";
 
@@ -6,9 +5,13 @@
     [ Validate ]*/
     const input = $('.validate-input .input100');
 
-    $('.validate-form').on('submit',function(){
-        let check = true;
+    console.log($);
 
+    $('.validate-form').submit(function(event) {
+
+        event.preventDefault();
+
+        let check = true;
         for(var i=0; i<input.length; i++) {
             if(validate(input[i]) == false){
                 showValidate(input[i]);
@@ -17,24 +20,36 @@
         }
 
         if(check) {
-            const username = $('input[name ="username"]');
-            const password = $('input[name ="pass"]');
+            const username = $('input[name="username"]').val();
+            const password = $('input[name="pass"]').val();
 
             $.ajax({
                 url: "/users/login",
+                async: true,
                 dataType: "json",
                 type: "POST",
                 data: {
                     username: username,
                     pass: password,
                 },
-            }).done(function(data) {
-                alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+                success: (data) => {
+                    console.log(data);
+                    if(data.state === "fail") {
+                        $('.fail').addClass(".alert-fail");
+                    }
+                    else {
+                        location.href = data.href;
+                    }
+                },
+                error: (req, state, error) => {
+                    alert(error);
+                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                },
             });
-
-        } else 
-            return check;
+        }
     });
+
+    console.log($);
 
 
     $('.validate-form .input100').each(function(){

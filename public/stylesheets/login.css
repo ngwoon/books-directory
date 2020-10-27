@@ -423,5 +423,18 @@ iframe {
 }
 
 
+/*
+    ajax fail
+*/
+.fail {
+    visibility: hidden;
+    font: 13px, red;
+    text-align: center;
+}
+
+.alert-fail {
+    visibility: visible;
+}
+
 /*//////////////////////////////////////////////////////////////////
 [ Responsive ]*/

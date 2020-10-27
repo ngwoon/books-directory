@@ -1,9 +1,9 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
-const secret = require('../secrets.json');
 const os = require("os");
 const session = require('express-session');
 const url = require("url");
+const secret = require('../secrets.json');
 const FileStore = require('session-file-store')(session); // 1
 
 const router = express.Router();
@@ -45,32 +45,40 @@ router.post('/login', async function(req, res, next) {
     console.log(id, pw);
 
     const querying = async () => {
+        const result = {};
+        let conn;
         try {
-            const conn = await connection.getConnection(async c => c);
+            conn = await connection.getConnection(async c => c);
             try {
                 const sql = "SELECT * FROM " + secret.TABLE + " WHERE id = ? and password = ?";
                 const [rows] = await connection.query(sql, [id, pw]);
-                conn.release();
-                return rows;
+                result.data = rows;
             } catch(error) {
                 console.log("데이터베이스 쿼리 오류");
                 console.log(error);
-                return false;
+                result.data = [];
             }
         } catch(error) {
             console.log("데이터베이스 연결 오류");
             console.log(error);
-            return false;
+            result.data = [];
+        } finally {
+            conn.release();
+            return result;
         }
     }
 
     const result = await querying();
 
     console.log(result);
-    if(!result) {
-        res.render('login', {type: "fail"});
+    if(result.data.length === 0) {
+        res.json({state: "fail"});
     } else {
-        res.render('login', {type: "success"});
+        req.session.user = id;
+        res.json({
+            state: "success",
+            href: SERVER,
+        });
     }
 });
 

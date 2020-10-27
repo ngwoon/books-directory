@@ -16,8 +16,6 @@ function init() {
         });
     });
 
-
-
     router.get('/search', function(req, res, next) {
         const title = req.query['file'];
         const fileName = title + ".txt";
@@ -52,36 +50,4 @@ function init() {
 
 init();
 module.exports = router;
-
-
-// router.get('/', function(req, res, next) {
-    //     const oTitle = req.query.title.concat('.txt');
-    //     const fileName = decodeURI(oTitle);
-    //     const reqType = req.query.type;
-    //     const path = __dirname + "/../public/files/" + fileName;
-    
-    //     console.log(fileName, reqType, path);
-    
-    //     fs.readFile(path, function(error, contentBuffer) {
-    //         const content = contentBuffer.toString("utf-8");
-    //         res.render('edit_file', {
-    //             title: fileName,
-    //             content: content,
-    //             reqType: reqType,
-    //         });
-    //     });
-        
-    // });
-    
-    // router.get('/list', function(req, res, next) {
-    //     const path = '/../public/files'
-    //     const files = fs.readdir(__dirname + path, function(error, files) {
-    //         if(error) {
-    //             // 디렉토리 파일 읽어오기 에러 처리 -> 500에러
-    //         }
-    //         res.render('edit_list', {
-    //             titles: files,
-    //         });
-    //     });
-    // });
     
