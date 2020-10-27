@@ -4,10 +4,10 @@
 
     /*==================================================================
     [ Validate ]*/
-    var input = $('.validate-input .input100');
+    const input = $('.validate-input .input100');
 
     $('.validate-form').on('submit',function(){
-        var check = true;
+        let check = true;
 
         for(var i=0; i<input.length; i++) {
             if(validate(input[i]) == false){
@@ -16,7 +16,24 @@
             }
         }
 
-        return check;
+        if(check) {
+            const username = $('input[name ="username"]');
+            const password = $('input[name ="pass"]');
+
+            $.ajax({
+                url: "/users/login",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    username: username,
+                    pass: password,
+                },
+            }).done(function(data) {
+                alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+            });
+
+        } else 
+            return check;
     });
 
 
