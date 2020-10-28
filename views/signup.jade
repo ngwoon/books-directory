@@ -1,0 +1,15 @@
+form(action='#' method='post')
+  h2 Sign Up
+  p
+    label.floatLabel(for='Email') Email
+    input#Email(name='Email' type='text')
+  p
+    label.floatLabel(for='password') Password
+    input#password(name='password' type='password')
+    span Enter a password longer than 8 characters
+  p
+    label.floatLabel(for='confirm_password') Confirm Password
+    input#confirm_password(name='confirm_password' type='password')
+    span Your passwords do not match
+  p
+    input#submit(type='submit' value='Create My Account')

@@ -35,11 +35,18 @@
                 success: (data) => {
                     console.log(data);
                     if(data.state === "fail") {
-                        $('.fail').addClass(".alert-fail");
+                        const failAlert = $(".fail").eq(0);
+                        if(failAlert.css("visibility") === "hidden")
+                            failAlert.css("visibility", "visible");
+                        else {
+                            failAlert.addClass("alert-fail");
+                            setTimeout(() => {
+                                failAlert.removeClass("alert-fail");
+                            }, 800);
+                        }
                     }
-                    else {
+                    else
                         location.href = data.href;
-                    }
                 },
                 error: (req, state, error) => {
                     alert(error);

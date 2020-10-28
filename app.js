@@ -32,7 +32,7 @@ app.use(session({  // 2
     secret: 'keyboard cat',  // 암호화
     resave: false,
     saveUninitialized: true,
-    store: new FileStore()
+    store: new FileStore(),
 }));
 
 app.use('/', indexRouter);
