@@ -1,53 +1,91 @@
-//Problem: Hints are shown even when form is valid
-//Solution: Hide and show them at appropriate times
-var $password = $("#password");
-var $confirmPassword = $("#confirm_password");
+(function ($) {
+    "use strict";
 
-//Hide hints
-$("form span").hide();
+    /*==================================================================
+    [ Validate ]*/
+    const input = $('.validate-input .input100');
 
-function isPasswordValid() {
-  return $password.val().length > 8;
-}
+    $('.validate-form').submit(function(event) {
 
-function arePasswordsMatching() {
-  return $password.val() === $confirmPassword.val();
-}
+        event.preventDefault();
 
-function canSubmit() {
-  return isPasswordValid() && arePasswordsMatching();
-}
+        let check = true;
+        for(var i=0; i<input.length; i++) {
+            if(validate(input[i]) == false){
+                showValidate(input[i]);
+                check=false;
+            }
+        }
 
-function passwordEvent(){
-    //Find out if password is valid  
-    if(isPasswordValid()) {
-      //Hide hint if valid
-      $password.next().hide();
-    } else {
-      //else show hint
-      $password.next().show();
+        if(check) {
+            const username = $('input[name="username"]').val();
+            const password = $('input[name="pass"]').val();
+
+            $.ajax({
+                url: "/users/login",
+                async: true,
+                dataType: "json",
+                type: "POST",
+                data: {
+                    username: username,
+                    pass: password,
+                },
+                success: (data) => {
+                    console.log(data);
+                    if(data.state === "fail") {
+                        const failAlert = $(".fail").eq(0);
+                        if(failAlert.css("visibility") === "hidden")
+                            failAlert.css("visibility", "visible");
+                        else {
+                            failAlert.addClass("alert-fail");
+                            setTimeout(() => {
+                                failAlert.removeClass("alert-fail");
+                            }, 800);
+                        }
+                    }
+                    else
+                        location.href = data.href;
+                },
+                error: (req, state, error) => {
+                    alert(error);
+                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                },
+            });
+        }
+    });
+
+
+    $('.validate-form .input100').each(function(){
+        $(this).focus(function(){
+           hideValidate(this);
+        });
+    });
+
+    function validate (input) {
+        if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
+            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+                return false;
+            }
+        }
+        else {
+            if($(input).val().trim() == ''){
+                return false;
+            }
+        }
     }
-}
 
-function confirmPasswordEvent() {
-  //Find out if password and confirmation match
-  if(arePasswordsMatching()) {
-    //Hide hint if match
-    $confirmPassword.next().hide();
-  } else {
-    //else show hint 
-    $confirmPassword.next().show();
-  }
-}
+    function showValidate(input) {
+        var thisAlert = $(input).parent();
 
-function enableSubmitEvent() {
-  $("#submit").prop("disabled", !canSubmit());
-}
+        $(thisAlert).addClass('alert-validate');
+    }
 
-//When event happens on password input
-$password.focus(passwordEvent).keyup(passwordEvent).keyup(confirmPasswordEvent).keyup(enableSubmitEvent);
+    function hideValidate(input) {
+        var thisAlert = $(input).parent();
 
-//When event happens on confirmation input
-$confirmPassword.focus(confirmPasswordEvent).keyup(confirmPasswordEvent).keyup(enableSubmitEvent);
+        $(thisAlert).removeClass('alert-validate');
+    }
+    
+    
 
-enableSubmitEvent();
+})(jQuery);

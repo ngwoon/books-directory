@@ -5,8 +5,6 @@
     [ Validate ]*/
     const input = $('.validate-input .input100');
 
-    console.log($);
-
     $('.validate-form').submit(function(event) {
 
         event.preventDefault();
@@ -55,9 +53,6 @@
             });
         }
     });
-
-    console.log($);
-
 
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){
