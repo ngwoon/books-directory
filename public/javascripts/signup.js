@@ -11,7 +11,7 @@
 
         let check = true;
         for(var i=0; i<input.length; i++) {
-            if(validate(input[i]) == false){
+            if(validate(input[i]) === false){
                 showValidate(input[i]);
                 check=false;
             }
@@ -22,7 +22,7 @@
             const password = $('input[name="pass"]').val();
 
             $.ajax({
-                url: "/users/login",
+                url: "/users/signup",
                 async: true,
                 dataType: "json",
                 type: "POST",
@@ -43,8 +43,10 @@
                             }, 800);
                         }
                     }
-                    else
+                    else {
+                        alert("회원가입이 완료되었습니다.");
                         location.href = data.href;
+                    }
                 },
                 error: (req, state, error) => {
                     alert(error);
@@ -54,7 +56,6 @@
         }
     });
 
-
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){
            hideValidate(this);
@@ -62,15 +63,20 @@
     });
 
     function validate (input) {
-        if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
-                return false;
-            }
-        }
+        const name = $(input).attr("name");
+        const val = $(input).val();
+        console.log(name);
+
+        if(val.trim() === "")
+            return false;
+
+        if(name === "username")
+            return val.length < 5 ? false: true;
+        else if(name === "pass")
+            return val.length < 8 ? false : true;
         else {
-            if($(input).val().trim() == ''){
-                return false;
-            }
+            const pass = $("input[name='pass']").eq(0).val();
+            return pass !== val ? false : true;
         }
     }
 
@@ -86,6 +92,4 @@
         $(thisAlert).removeClass('alert-validate');
     }
     
-    
-
 })(jQuery);
