@@ -36,12 +36,18 @@ const connection = mysql.createPool({
 
 /* GET users listing. */
 router.get('/login', function(req, res, next) {
-    res.render('login', {valid: "normal"});
+    console.log(req.session.user);
+    if(req.session.user) {
+        res.send('이미 로그인 하신 상태입니다.');
+        return;
+    }
+    res.render('login');
 });
 
 router.post('/login', async function(req, res, next) {
     const id = req.body.username;
     const pw = req.body.pass;
+    
     console.log(id, pw);
 
     const querying = async () => {
@@ -81,11 +87,18 @@ router.post('/login', async function(req, res, next) {
         });
     }
 });
-
-
 router.get("/logout", function(req, res, next) {
     req.session.destroy();
     res.redirect(SERVER);
+});
+
+
+router.get('/signup', function(req, res, next) {
+    res.render('signup');
+});
+
+router.post('/signup', function(req, res, next) {
+
 });
 
 

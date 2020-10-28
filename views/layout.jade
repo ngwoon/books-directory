@@ -1,8 +1,10 @@
 doctype html
 html
   head
-    title= title
-    meta(charset="utf-8")
+    block title
+        title= title
+    block meta
+        meta(charset="utf-8")
     block css
   body
     block content

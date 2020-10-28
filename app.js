@@ -24,6 +24,12 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(require('node-sass-middleware')({
+    src: path.join(__dirname, 'public'),
+    dest: path.join(__dirname, 'public'),
+    sourceMap: true,
+    outputStyle: 'compressed'
+})); 
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -32,7 +38,7 @@ app.use(session({  // 2
     secret: 'keyboard cat',  // 암호화
     resave: false,
     saveUninitialized: true,
-    store: new FileStore()
+    store: new FileStore(),
 }));
 
 app.use('/', indexRouter);

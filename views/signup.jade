@@ -1,7 +1,7 @@
 extends layout
 
 block title
-    title Login V10
+    title Sign Up V10
 
 block meta
     meta(charset='UTF-8')
@@ -38,23 +38,21 @@ block css
                 .wrap-login100.p-t-50.p-b-90
                     form.login100-form.validate-form.flex-sb.flex-w(method="POST")
                         span.login100-form-title.p-b-51
-                            | Login
+                            | Sign Up
                         .wrap-input100.validate-input.m-b-16(data-validate='Username is required')
                             input.input100(type='text' name='username' placeholder='Username')
                             span.focus-input100
                         .wrap-input100.validate-input.m-b-16(data-validate='Password is required')
                             input.input100(type='password' name='pass' placeholder='Password')
                             span.focus-input100
-                        //- .flex-sb-m.w-full.p-t-3.p-b-24
-                        a.txt1(href='/users/signup')
-                            | Join Us!
-                        .fail
-                            | 로그인 실패
-                        a.txt1(href='#')
-                            | Forgot?
+                        .wrap-input100.validate-input.m-b-16(data-validate='Wrong Password')
+                            input.input100(type='password' name='confirm-pass' placeholder='Confirm Password')
+                            span.focus-input100
+
                         .container-login100-form-btn.m-t-17
                             button.login100-form-btn
-                                | Login
+                                | Submit
+                            
     #dropDownSelect1
     // ===============================================================================================
     script(src='/vendor/jquery/jquery-3.2.1.min.js')
