@@ -1,0 +1,71 @@
+@font-face {
+    font-family: Ubuntu-Regular;
+    src: url('../fonts/ubuntu/Ubuntu-Regular.ttf'); 
+  }
+  
+  @font-face {
+    font-family: Ubuntu-Bold;
+    src: url('../fonts/ubuntu/Ubuntu-Bold.ttf'); 
+  }
+
+:root {
+    --background-color:#2C4068;
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: 0;
+}
+
+body {
+    font-family: Ubuntu-Regular, sans-serif;
+    background-color:#f2f2f2;
+}
+
+.login-form {
+    background: #fff;
+    margin: 150px auto;
+    width: 30%;
+    height: 300px;
+}
+
+.container {
+    margin: 0 auto;
+    width: 70%;
+}
+
+
+.h {
+    padding: 0.75rem 0;
+    font-size: 3rem;
+    text-align: center;
+}
+
+@media(max-width:800px) {
+  .h {
+  font-size: 5vw; 
+}
+}
+
+
+.content {
+    font-size: 1.25rem;
+    margin: 15px 9% 0 9%;
+    color: gray;
+}
+
+.form {
+    width: 80%;
+    margin: 0 9%;
+    height: 30px;
+}
+
+.button {
+    width: 81%;
+    height: 50px;
+    background: #41B998;
+    color: #fff;
+    font-size: 1.25rem;
+    margin: 5% 9%;
+    border: none;
+}

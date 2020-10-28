@@ -1,0 +1,10 @@
+extends layout
+
+block css
+    link(rel='stylesheet', href='/stylesheets/show_file.css')
+
+block content
+    .wrap
+        h1.title #{title}
+        br
+        textarea(readonly) #{content}

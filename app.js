@@ -1,11 +1,19 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
+// var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mysql = require("mysql2");
+const os = require("os");
+const session = require("express-session");
+const FileStore = require('session-file-store')(session);
+const secret = require("./secrets.json");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var docRouter = require('./routes/document');
+
+// var bodyParser = require('body-parser');
 
 var app = express();
 
@@ -16,15 +24,30 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(require('node-sass-middleware')({
+    src: path.join(__dirname, 'public'),
+    dest: path.join(__dirname, 'public'),
+    sourceMap: true,
+    outputStyle: 'compressed'
+})); 
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// session setting
+app.use(session({  // 2
+    secret: 'keyboard cat',  // 암호화
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore(),
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/document', docRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.render("404");
 });
 
 // error handler

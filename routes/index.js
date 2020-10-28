@@ -1,9 +1,16 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+
+    const params = { title: 'Books Directory' };
+    if(req.session.user)
+        params.authenticated = req.session.user;
+
+    console.log(params);
+    
+    res.render('index', params);
 });
 
 module.exports = router;

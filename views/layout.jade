@@ -1,14 +1,15 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    block title
+        title= title
+    block meta
+        meta(charset="utf-8")
+    block css
   body
     block content
 
-    block sidebar
-
+    block script
     
 
     
