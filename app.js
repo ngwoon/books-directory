@@ -1,13 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-// var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const mysql = require("mysql2");
-const os = require("os");
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
-const secret = require("./secrets.json");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -24,12 +20,6 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(require('node-sass-middleware')({
-    src: path.join(__dirname, 'public'),
-    dest: path.join(__dirname, 'public'),
-    sourceMap: true,
-    outputStyle: 'compressed'
-})); 
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

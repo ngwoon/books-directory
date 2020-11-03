@@ -7,4 +7,7 @@ block content
     .wrap
         h1.title #{title}
         br
-        textarea(readonly) #{content}
+        .content
+            textarea(readonly) #{content}
+        .edit-button
+            button(value="edit")

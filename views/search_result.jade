@@ -7,8 +7,8 @@ block content
     .wrap
         h1 검색 결과입니다
         each file, idx in files
-            .card
-                a(href="#", onclick="onDocumentClicked('#{file}')") #{file}
+            .card(onclick="onDocumentClicked('#{file}')")
+                | #{file}
 
         .go-to-back
             a(href="../../") 검색 페이지로 돌아가기..
