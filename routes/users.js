@@ -1,10 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
 const os = require("os");
-const session = require('express-session');
-const url = require("url");
 const secret = require('../secrets.json');
-const FileStore = require('session-file-store')(session); // 1
 
 const router = express.Router();
 
