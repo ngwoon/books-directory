@@ -7,4 +7,8 @@ block content
     .wrap
         h1.title #{title}
         br
-        textarea(readonly) #{content}
+        .innerwrap
+            .button-wrap
+                button(value="편집")
+            textarea(readonly) #{content}
+        
