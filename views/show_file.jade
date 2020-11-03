@@ -7,7 +7,16 @@ block content
     .wrap
         h1.title #{title}
         br
-        .content
-            textarea(readonly) #{content}
-        .edit-button
-            button(value="edit")
+        .innerwrap
+            if user
+                form(method="post").js-update-form
+                    input(type="hidden" name="_method" value="put")
+                    .button-wrap
+                        button(type="submit" class="js-edit-button edit-button") 업데이트 요청
+                    textarea(name="content").js-textarea #{content}
+            
+            else
+                textarea(readonly value="") #{content}
+
+block script
+    script(src="/javascripts/show_file.js")

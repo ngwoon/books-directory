@@ -10,7 +10,7 @@ var usersRouter = require('./routes/users');
 var docRouter = require('./routes/document');
 
 // constants
-const SESSION_EXPIRE_MILLI = 10000; // 테스트를 위해 세션 만료 시간을 10초로 설정
+const SESSION_EXPIRE_MILLI = 10000000; // 테스트를 위해 세션 만료 시간을 10000초로 설정
 const EXPIRED_SESSION_CLEAR_TIME = 10; // 테스트를 위해 만료된 세션 정리 시간을 10초로 설정
 
 var app = express();

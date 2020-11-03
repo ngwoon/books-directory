@@ -24,8 +24,13 @@ function init() {
         fs.readFile(__dirname + path, function(error, content) {
             if(error) {
                 res.render("404");
-            } else
-                res.render("show_file", {title, content,});
+            } else {
+                res.render("show_file", {
+                    title, 
+                    content,
+                    user: req.session.user
+                });
+            }
         });
     });
 
@@ -46,6 +51,15 @@ function init() {
             files: coincideFiles,
         })
     });
+
+    router.put("/edit", function(req, res, next) {
+        res.send("put");
+    });
+    router.post("/edit", function(req, res, next) {
+        res.send("post");
+    });
+
+
 }
 
 init();
