@@ -10,6 +10,9 @@ block content
         .innerwrap
             if user
                 .button-wrap
-                    button(type="button" class="js-edit-button edit-button") 편집
-            textarea(readonly) #{content}
-        
+                    form(action="#" method="POST")
+                        button(type="submit" class="js-edit-button edit-button") 업데이트 요청
+                textarea() #{content}
+            
+            else
+                textarea(readonly) #{content}
