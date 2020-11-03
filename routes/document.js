@@ -51,6 +51,15 @@ function init() {
             files: coincideFiles,
         })
     });
+
+    router.put("/edit", function(req, res, next) {
+        res.send("put");
+    });
+    router.post("/edit", function(req, res, next) {
+        res.send("post");
+    });
+
+
 }
 
 init();

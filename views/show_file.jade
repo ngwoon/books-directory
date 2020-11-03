@@ -9,10 +9,14 @@ block content
         br
         .innerwrap
             if user
-                .button-wrap
-                    form(action="#" method="POST")
+                form(method="post").js-update-form
+                    input(type="hidden" name="_method" value="put")
+                    .button-wrap
                         button(type="submit" class="js-edit-button edit-button") 업데이트 요청
-                textarea() #{content}
+                    textarea(name="content").js-textarea #{content}
             
             else
-                textarea(readonly) #{content}
+                textarea(readonly value="") #{content}
+
+block script
+    script(src="/javascripts/show_file.js")
