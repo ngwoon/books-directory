@@ -8,7 +8,8 @@ block content
         h1.title #{title}
         br
         .innerwrap
-            .button-wrap
-                button(type="button" class="js-edit-button edit-button") 편집
+            if user
+                .button-wrap
+                    button(type="button" class="js-edit-button edit-button") 편집
             textarea(readonly) #{content}
         

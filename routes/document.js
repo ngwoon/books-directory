@@ -24,8 +24,13 @@ function init() {
         fs.readFile(__dirname + path, function(error, content) {
             if(error) {
                 res.render("404");
-            } else
-                res.render("show_file", {title, content,});
+            } else {
+                res.render("show_file", {
+                    title, 
+                    content,
+                    user: req.session.user
+                });
+            }
         });
     });
 
