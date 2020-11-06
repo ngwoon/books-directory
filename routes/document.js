@@ -58,8 +58,6 @@ function init() {
     router.post("/edit", function(req, res, next) {
         res.send("post");
     });
-
-
 }
 
 init();

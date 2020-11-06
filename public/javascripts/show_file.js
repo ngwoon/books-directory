@@ -20,6 +20,7 @@ function onUpdateBtnClicked(event) {
     else {
         const form = document.querySelector(".js-update-form");
         form.action = "/document/edit";
+        form.method = "POST";
         form.submit();
     }
 }
@@ -34,7 +35,6 @@ function init() {
     const form = document.querySelector(".js-update-form");
     form.onsubmit = onUpdateBtnClicked;
 }
-
 
 let originalContent;
 init();
