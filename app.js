@@ -50,7 +50,6 @@ app.use(methodOverride(function (req, res) {
         // look in urlencoded POST bodies and delete it
         const method = req.body._method;
         delete req.body._method;
-        console.log(`method = ${method}`);
         return method;
     }
 }));
@@ -63,7 +62,7 @@ app.use('/document', docRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.render("404");
+    res.render("404");
 });
 
 // error handler

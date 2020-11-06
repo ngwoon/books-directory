@@ -9,14 +9,16 @@ block content
         br
         .innerwrap
             if user
-                form(method="post").js-update-form
+                form(action="/document/edit" method="post").js-update-form
                     input(type="hidden" name="_method" value="PUT")
                     .button-wrap
                         button(type="submit" class="js-edit-button edit-button") 업데이트 요청
                     textarea(name="content").js-textarea #{content}
+                    input(type="hidden" name="title" value="#{title}")
             
             else
                 textarea(readonly value="") #{content}
 
 block script
+    script(src='/vendor/jquery/jquery-3.2.1.min.js')
     script(src="/javascripts/show_file.js")
