@@ -1,12 +1,13 @@
 const express = require('express');
 const fs = require('fs');
 
+const FILE_PATH = "/../public/files/"
+
 const router = express.Router();
 let fileList = [];
 
 function init() {
-    const path = '/../public/files'
-    const files = fs.readdir(__dirname + path, function(error, files) {
+    const files = fs.readdir(__dirname + FILE_PATH, function(error, files) {
         if(error) {
             // 디렉토리 파일 읽어오기 에러 처리 -> 500에러
         }
@@ -19,10 +20,13 @@ function init() {
     router.get('/search', function(req, res, next) {
         const title = req.query['file'];
         const fileName = title + ".txt";
-        
-        const path = "/../public/files/" + fileName;
+        const path = FILE_PATH + fileName;
+        console.log(title);
+
         fs.readFile(__dirname + path, function(error, content) {
             if(error) {
+                console.log("-- File Read Error --");
+                console.log(error);
                 res.render("404");
             } else {
                 res.render("show_file", {
@@ -47,19 +51,28 @@ function init() {
             }
         });
 
-        res.render("search_result", {
-            files: coincideFiles,
-        })
+        res.render("search_result", { files: coincideFiles });
     });
 
     router.put("/edit", function(req, res, next) {
-        res.send("put");
-    });
-    router.post("/edit", function(req, res, next) {
-        res.send("post");
-    });
+        const content = req.body.content;
+        const title = req.body.title;
+        const fileName = title + ".txt";
+        const path = FILE_PATH + fileName;
 
+        console.log(`title = ${title}`);
 
+        fs.writeFile(__dirname + path, content, function(error) {
+            if(error) {
+                console.log("-- File Write Error --");
+                console.log(error);
+                res.send("File Write Error");
+            } else {
+                const path = '/document/search?file='+title;
+                res.redirect(302, path);
+            }
+        });
+    });
 }
 
 init();

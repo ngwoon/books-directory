@@ -1,13 +1,14 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
+const methodOverride = require("method-override");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var docRouter = require('./routes/document');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const docRouter = require('./routes/document');
 
 // constants
 const SESSION_EXPIRE_MILLI = 10000000; // 테스트를 위해 세션 만료 시간을 10000초로 설정
@@ -43,17 +44,25 @@ app.use(session({  // 2
     store: new FileStore(fileStoreOptions),
 }));
 
+// method-override setting
+app.use(methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        // look in urlencoded POST bodies and delete it
+        const method = req.body._method;
+        delete req.body._method;
+        return method;
+    }
+}));
+
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/document', docRouter);
 
 
-
-
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.render("404");
+    res.render("404");
 });
 
 // error handler

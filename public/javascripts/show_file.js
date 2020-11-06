@@ -1,27 +1,9 @@
 function getContent() {
     const textArea = document.querySelector(".js-textarea");
     let content = textArea.value;
-
-    // content = content.replace("<textarea>", "");
-    // content = content.replace("</textarea>", "");
     content = content.trim();
 
     return content;
-}
-
-function onUpdateBtnClicked(event) {
-    event.preventDefault();
-
-    const content = getContent();
-
-    // 변경사항이 없으면 반응하지 않는다.
-    if(content.localeCompare(originalContent) === 0)
-        return false;
-    else {
-        const form = document.querySelector(".js-update-form");
-        form.action = "/document/edit";
-        form.submit();
-    }
 }
 
 function init() {
@@ -31,10 +13,28 @@ function init() {
     if(editBtn)
         originalContent = getContent();
 
-    const form = document.querySelector(".js-update-form");
-    form.onsubmit = onUpdateBtnClicked;
-}
+    $(".js-update-form").submit(function(event) {
+        event.preventDefault();
 
+        const content = getContent();
+
+        // 변경사항이 없으면 반응하지 않는다.
+        if(content.localeCompare(originalContent) === 0)
+            return false;
+        else {
+            const url = "/document/edit";
+            const type = "post";
+            const formData = $(this).serialize();
+            $.ajax({
+                url: "/document/edit",
+                type: "post",
+                data: formData,
+            }).done(function(response) {
+                alert("업데이트 완료");
+            });
+        }
+    });  
+}
 
 let originalContent;
 init();
