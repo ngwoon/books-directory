@@ -26,8 +26,8 @@ function init() {
             const type = "post";
             const formData = $(this).serialize();
             $.ajax({
-                url: "/document/edit",
-                type: "post",
+                url,
+                type,
                 data: formData,
             }).done(function(response) {
                 alert("업데이트 완료");
