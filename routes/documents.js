@@ -17,7 +17,23 @@ function init() {
         });
     });
 
-    router.get('/search', function(req, res, next) {
+    router.get('', function(req, res, next) {
+        const searchTerm = req.query['searchTerm'];
+        const coincideFiles = [];
+        fileList.forEach(file => {
+            for(let i=0; i<searchTerm.length; ++i) {
+                if(file.indexOf(searchTerm[i]) !== -1) {
+                    coincideFiles.push(file);
+                    break;
+                }
+            }
+        });
+
+        res.render("search_result", { files: coincideFiles });
+    });
+
+    router.get('/document', function(req, res, next) {
+
         const title = req.query['file'];
         const fileName = title + ".txt";
         const path = FILE_PATH + fileName;
@@ -38,23 +54,7 @@ function init() {
         });
     });
 
-    router.post('/search', function(req, res, next) {
-        const searchTerm = req.body.searchTerm.split(" ");
-
-        const coincideFiles = [];
-        fileList.forEach(file => {
-            for(let i=0; i<searchTerm.length; ++i) {
-                if(file.indexOf(searchTerm[i]) !== -1) {
-                    coincideFiles.push(file);
-                    break;
-                }
-            }
-        });
-
-        res.render("search_result", { files: coincideFiles });
-    });
-
-    router.put("/edit", function(req, res, next) {
+    router.put("/document", function(req, res, next) {
         const content = req.body.content;
         const title = req.body.title;
         const fileName = title + ".txt";
@@ -68,7 +68,7 @@ function init() {
                 console.log(error);
                 res.send("File Write Error");
             } else {
-                const path = '/document/search?file='+title;
+                const path = '/documents/document?file='+title;
                 res.redirect(302, path);
             }
         });

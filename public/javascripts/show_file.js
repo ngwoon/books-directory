@@ -22,7 +22,8 @@ function init() {
         if(content.localeCompare(originalContent) === 0)
             return false;
         else {
-            const url = "/document/edit";
+            console.log(document.location.href);
+            const url = "/documents/document";
             const type = "post";
             const formData = $(this).serialize();
             $.ajax({

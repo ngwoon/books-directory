@@ -7,7 +7,7 @@ block content
     .wrap
         h1 검색 결과입니다
         each file, idx in files
-            .card(onclick="onDocumentClicked('#{file}')")
+            .card(onclick="onCardClicked('" + file + "');")
                 | #{file}
 
         .go-to-back

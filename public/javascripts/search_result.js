@@ -1,5 +1,4 @@
-function onDocumentClicked(file) {
-    const currentURL = document.location.href;
-    const nextURL = currentURL + "?file=" + file;
+function onCardClicked(file) {
+    const nextURL = "/documents/document" + "?file=" + file;
     location.href = nextURL;
 }
