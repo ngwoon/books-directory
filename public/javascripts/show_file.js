@@ -22,12 +22,13 @@ function init() {
         if(content.localeCompare(originalContent) === 0)
             return false;
         else {
-            const url = "/document/edit";
+            console.log(document.location.href);
+            const url = "/documents/document";
             const type = "post";
             const formData = $(this).serialize();
             $.ajax({
-                url: "/document/edit",
-                type: "post",
+                url,
+                type,
                 data: formData,
             }).done(function(response) {
                 alert("업데이트 완료");

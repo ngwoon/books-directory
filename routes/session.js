@@ -40,7 +40,7 @@ function init() {
     connectDB();
 
     /* GET users listing. */
-    router.get('/session', function(req, res, next) {
+    router.get('', function(req, res, next) {
         console.log(req.session.user);
         if(req.session.user) {
             res.send('이미 로그인 하신 상태입니다.');
@@ -49,7 +49,7 @@ function init() {
         res.render('login');
     });
 
-    router.post('/session', async function(req, res, next) {
+    router.post('', async function(req, res, next) {
         const id = req.body.username;
         const pw = req.body.pass;
         
@@ -93,73 +93,12 @@ function init() {
         }
     });
 
-    router.get("/logout", function(req, res, next) {
+    router.delete("", function(req, res, next) {
         req.session.destroy();
         res.redirect(SERVER);
     });
-
-
-    router.get('/signup', function(req, res, next) {
-        res.render('signup');
-    });
-
-    router.post('/signup', async function(req, res, next) {
-        const id = req.body.username;
-        const pw = req.body.pass;
-        
-        console.log(id, pw);
-
-        const querying = async () => {
-            const result = {};
-            let conn;
-            try {
-                conn = await connection.getConnection(async c => c);
-                try {
-                    let sql = "SELECT * FROM " + secret.TABLE + " WHERE id = ?";
-                    const [rows] = await connection.query(sql, [id]);
-                    result.data = rows;
-                    
-                    if(rows.length === 0) {
-                        sql = "INSERT INTO " + secret.TABLE + "(id, password) VALUES(?,?)";
-                        connection.query(sql, [id, pw], function(error, rows, fields) {
-                            if(error) {
-                                console.log("database insert error");
-                                console.log(error);
-                            } else {
-                                console.log("user insert complete");
-                                console.log(rows);
-                            }
-                        });
-                    }
-                } catch(error) {
-                    console.log("데이터베이스 쿼리 오류");
-                    console.log(error);
-                    result.data = [];
-                }
-            } catch(error) {
-                console.log("데이터베이스 연결 오류");
-                console.log(error);
-                result.data = [];
-            } finally {
-                conn.release();
-                return result;
-            }
-        }
-
-        const result = await querying();
-
-        console.log(result);
-        if(result.data.length !== 0) {
-            res.json({state: "fail"});
-        } else {
-            res.json({
-                state: "success",
-                href: SERVER+"/users/login",
-            });
-        }
-    });
 }
 
-
 init();
+
 module.exports = router;

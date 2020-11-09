@@ -7,14 +7,15 @@ const FileStore = require('session-file-store')(session);
 const methodOverride = require("method-override");
 
 const indexRouter = require('./routes/index');
+const docRouter = require('./routes/documents');
 const usersRouter = require('./routes/users');
-const docRouter = require('./routes/document');
+const sessionRouter = require('./routes/session');
 
 // constants
 const SESSION_EXPIRE_MILLI = 10000000; // 테스트를 위해 세션 만료 시간을 10000초로 설정
-const EXPIRED_SESSION_CLEAR_TIME = 10; // 테스트를 위해 만료된 세션 정리 시간을 10초로 설정
+const EXPIRED_SESSION_CLEAR_TIME = 100; // 테스트를 위해 만료된 세션 정리 시간을 100초로 설정
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,11 +55,10 @@ app.use(methodOverride(function (req, res) {
     }
 }));
 
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/document', docRouter);
-
+app.use('/documents', docRouter);
+app.use("/session", sessionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

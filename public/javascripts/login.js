@@ -22,7 +22,7 @@
             const password = $('input[name="pass"]').val();
 
             $.ajax({
-                url: "/users/login",
+                url: "/session",
                 async: true,
                 dataType: "json",
                 type: "POST",

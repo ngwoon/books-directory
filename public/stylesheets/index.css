@@ -25,13 +25,14 @@ li {
     margin-top: 10px;
 }
 
-.user-check > a {
+.user-check a {
     text-decoration: none;
     position: relative;
     color: black;
+    cursor: pointer; 
 }
 
-.user-check > a:before {
+.user-check a:before {
     content: "";
     position: absolute;
     width: 100%;
@@ -44,7 +45,7 @@ li {
     transition: all 0.3s ease-in-out;
 }
 
-.user-check > a:hover:before {
+.user-check a:hover:before {
     visibility: visible;
     transform: scaleX(1);
 }
