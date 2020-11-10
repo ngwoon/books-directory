@@ -71,11 +71,11 @@ textarea {
 :root {
     --color-grass: #3dd28d;
     --color-snow: #FFFFFF;
+    --color-red: #FF6347;
     --borderRadius: 36px;
 }
 
-.edit-button {
-    
+.btn {
     float: right;
     width: 100px;
     height: 25px;
@@ -114,22 +114,28 @@ textarea {
     box-shadow: 2px 5px 10px var(--color-smoke);
     
     color: var(--color-snow);
+}
+
+.update-button {
     background: var(--color-grass);
+}
+.delete-button {
+    background: var(--color-red);
 }
 
 
-.edit-button:hover {
+.btn:hover {
     transition: all 150ms linear;
 
     opacity: .85;
 }
 
-.edit-button:active {
+.btn:active {
     transition: all 150ms linear;
     opacity: .75;
 }
   
-.edit-button:focus {
+.btn:focus {
     outline: 1px dotted #959595;
     outline-offset: -4px;
 }
