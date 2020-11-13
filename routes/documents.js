@@ -73,6 +73,14 @@ function init() {
             }
         });
     });
+
+    router.delete("/document", function(req, res, next) {
+        const title = req.body.title;
+        
+        
+
+        res.json({state: "success"});
+    });
 }
 
 init();
