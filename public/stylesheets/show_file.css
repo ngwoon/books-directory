@@ -108,7 +108,7 @@ textarea {
     appearance:         none;
     
     justify-content: center;
-    align-items: center;
+    align-items: center;    
     flex: 0 0 160px;
     
     box-shadow: 2px 5px 10px var(--color-smoke);
@@ -126,7 +126,6 @@ textarea {
 
 .btn:hover {
     transition: all 150ms linear;
-
     opacity: .85;
 }
 

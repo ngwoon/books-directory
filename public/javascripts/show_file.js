@@ -35,7 +35,9 @@ function initUpdateRequest() {
 }
 
 function initDeleteRequest() {
-    const deleteBtn = document.querySelector(".js-delete-button");
+    $(".js-delete-button").click(function(event) {
+        
+    });
 }
 
 
