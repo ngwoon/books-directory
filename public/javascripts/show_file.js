@@ -6,15 +6,12 @@ function getContent() {
     return content;
 }
 
-function init() {
-    const editBtn = document.querySelector(".js-edit-button");
-    
-    // 편집 가능한 상태. 즉, 로그인된 상태일 때
-    if(editBtn)
-        originalContent = getContent();
-
+function initUpdateRequest() {
     $(".js-update-form").submit(function(event) {
         event.preventDefault();
+        
+        if(event.originalEvent.submitter === $(".js-delete-button"))
+            return false;
 
         const content = getContent();
 
@@ -35,6 +32,24 @@ function init() {
             });
         }
     });  
+}
+
+function initDeleteRequest() {
+    $(".js-delete-button").click(function(event) {
+        
+    });
+}
+
+
+function init() {
+    const updateBtn = document.querySelector(".js-update-button");
+    
+    // 편집 가능한 상태. 즉, 로그인된 상태일 때
+    if(updateBtn)
+        originalContent = getContent();
+
+    initUpdateRequest();
+    initDeleteRequest();
 }
 
 let originalContent;

@@ -12,7 +12,8 @@ block content
                 form(action="#").js-update-form
                     input(type="hidden" name="_method" value="PUT")
                     .button-wrap
-                        button(type="submit" class="js-edit-button edit-button") 업데이트 요청
+                        button(type="submit" class="js-update-button btn update-button") 업데이트 요청
+                        button(type="button" class="js-delete-button btn delete-button") 삭제 요청
                     textarea(name="content").js-textarea #{content}
                     input(type="hidden" name="title" value="#{title}")
             

@@ -22,7 +22,7 @@
             const password = $('input[name="pass"]').val();
 
             $.ajax({
-                url: "/users/signup",
+                url: "/users",
                 async: true,
                 dataType: "json",
                 type: "POST",
@@ -37,6 +37,7 @@
                         if(failAlert.css("visibility") === "hidden")
                             failAlert.css("visibility", "visible");
                         else {
+                            failAlert.value = data.reason;
                             failAlert.addClass("alert-fail");
                             setTimeout(() => {
                                 failAlert.removeClass("alert-fail");
@@ -49,8 +50,8 @@
                     }
                 },
                 error: (req, state, error) => {
-                    alert(error);
-                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    alert("회원가입 실패." + data.reason);
+                    console.log(error);
                 },
             });
         }

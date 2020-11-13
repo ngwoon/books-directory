@@ -17,9 +17,8 @@ block content
 
     .user-check
         if !authenticated
-            form(action="/session" method="get")
-                a(onclick="this.parentNode.submit();")
-                    | 로그인 하시려면 이쪽으로..
+            a(href="/session")
+                | 로그인 하시려면 이쪽으로..
         else
             | #{authenticated} 님. 환영합니다.
             br

@@ -39,107 +39,67 @@ function init() {
     setInfoVariables();
     connectDB();
 
-    /* GET users listing. */
-    router.get('/session', function(req, res, next) {
-        console.log(req.session.user);
-        if(req.session.user) {
-            res.send('이미 로그인 하신 상태입니다.');
-            return;
-        }
-        res.render('login');
-    });
-
-    router.post('/session', async function(req, res, next) {
-        const id = req.body.username;
-        const pw = req.body.pass;
-        
-        console.log(id, pw);
-
-        const querying = async () => {
-            const result = {};
-            let conn;
-            try {
-                conn = await connection.getConnection(async c => c);
-                try {
-                    const sql = "SELECT * FROM " + secret.TABLE + " WHERE id = ? and password = ?";
-                    const [rows] = await connection.query(sql, [id, pw]);
-                    result.data = rows;
-                } catch(error) {
-                    console.log("데이터베이스 쿼리 오류");
-                    console.log(error);
-                    result.data = [];
-                }
-            } catch(error) {
-                console.log("데이터베이스 연결 오류");
-                console.log(error);
-                result.data = [];
-            } finally {
-                conn.release();
-                return result;
-            }
-        }
-
-        const result = await querying();
-
-        console.log(result);
-        if(result.data.length === 0) {
-            res.json({state: "fail"});
-        } else {
-            req.session.user = id;
-            res.json({
-                state: "success",
-                href: SERVER,
-            });
-        }
-    });
-
-    router.get("/logout", function(req, res, next) {
-        req.session.destroy();
-        res.redirect(SERVER);
-    });
-
-
-    router.get('/signup', function(req, res, next) {
+    router.get('', function(req, res, next) {
         res.render('signup');
     });
 
-    router.post('/signup', async function(req, res, next) {
+    router.post('', async function(req, res, next) {
         const id = req.body.username;
         const pw = req.body.pass;
+        const type = "normal";
         
         console.log(id, pw);
 
         const querying = async () => {
-            const result = {};
+            let result = {};
             let conn;
+
+            result.type = true;
+            
             try {
                 conn = await connection.getConnection(async c => c);
                 try {
-                    let sql = "SELECT * FROM " + secret.TABLE + " WHERE id = ?";
-                    const [rows] = await connection.query(sql, [id]);
-                    result.data = rows;
-                    
-                    if(rows.length === 0) {
-                        sql = "INSERT INTO " + secret.TABLE + "(id, password) VALUES(?,?)";
-                        connection.query(sql, [id, pw], function(error, rows, fields) {
+                    let sql = "SELECT * FROM user WHERE id=? and password=?";
+                    connection.query(sql, [id, pw], function(error, rows, fields) {
+                        if(error) {
+                            console.log("database select error");
+                            console.log(error);
+                            result.type = false;
+                            result.reason = "server db error";
+                        } else {
+                            if(rows.length !== 0) {
+                                result.type = false;
+                                result.reason = "exist id";
+                            }
+                        }
+                    });
+
+                    if(result.type) {
+                        sql = "INSERT INTO " + secret.TABLE + "(id, password, type) VALUES(?,?,?)";
+                        connection.query(sql, [id, pw, type], function(error, rows, fields) {
                             if(error) {
                                 console.log("database insert error");
                                 console.log(error);
+                                result.type = false;
+                                result.reason = "server db error";
                             } else {
                                 console.log("user insert complete");
                                 console.log(rows);
+                                result.type = true;
                             }
                         });
                     }
                 } catch(error) {
                     console.log("데이터베이스 쿼리 오류");
                     console.log(error);
-                    result.data = [];
+                    result.type = false;
+                    result.reason = "server db error";
                 }
             } catch(error) {
                 console.log("데이터베이스 연결 오류");
                 console.log(error);
-                result.data = [];
+                result.type = false;
+                result.reason = "server db error";
             } finally {
                 conn.release();
                 return result;
@@ -148,13 +108,15 @@ function init() {
 
         const result = await querying();
 
-        console.log(result);
-        if(result.data.length !== 0) {
-            res.json({state: "fail"});
+        if(!result.type) {
+            res.json({
+                state: "fail",
+                reason: result.reason,
+            });
         } else {
             res.json({
                 state: "success",
-                href: SERVER+"/users/login",
+                href: SERVER+"/session",
             });
         }
     });
